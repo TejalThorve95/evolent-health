@@ -1,0 +1,187 @@
+openapi: 3.0.1
+info:
+  title: Contact API
+  description: Contact Api Documentation
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: "1.0"
+servers:
+  - url: //product.syngentadigitalapps.com/v1
+tags:
+  - name: Evolent Health
+    description: Contact Controller
+paths:
+  /contacts:
+    get:
+      summary: Get list of contacts
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactTypeResponse'
+
+
+    post:
+      summary: Create a Contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostContactRequests'
+
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactTypeResponse'
+
+
+  /contacts/{id}:
+    delete:
+      summary: Delete a contact
+      parameters:
+        - schema:
+            type: string
+          name: id
+          in: path
+          required: true
+      responses:
+        200:
+          description: successful operation
+    put:
+      summary: Update contact
+      parameters:
+        - schema:
+            type: string
+          name: id
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactPutRequest'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactPutResponse'
+
+
+
+
+
+
+
+
+
+
+
+components:
+  schemas:
+
+    ContactTypeResponse:
+      properties:
+        items:
+          $ref: '#/components/schemas/ContactType'
+    ContactType:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        status:
+          type: boolean
+      example:
+        - id: 1
+          first_name: Tejal
+          last_name: Thorve
+          phone: 8857885282
+          email: tejal.thorve@gmail.com
+          status: true
+        - id: 2
+          first_name: Akshay
+          last_name: Thorve
+          phone: 8857443282
+          email: akshay.thorve@gmail.com
+          status: true
+    PostContactRequests:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/ContactTypeRequest'
+    ContactTypeRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        status:
+          type: boolean
+      example:
+        - first_name: Tejal
+          last_name: Thorve
+          phone: 8857885282
+          email: tejal.thorve@gmail.com
+          status: true
+        - first_name: Akshay
+          last_name: Thorve
+          phone: 8857443282
+          email: akshay.thorve@gmail.com
+          status: true
+
+    ContactPutResponse:
+      example:
+        id: 1
+        first_name: Tejal
+        last_name: Thorve
+        phone: 8857885282
+        email: tejal.thorve95@gmail.com
+        status: active
+    ContactPutRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        status:
+          type: boolean
+      example:
+        id: 1
+        first_name: Tejal
+        last_name: Thorve
+        phone: 8857885282
+        email: tejal.thorve95@gmail.com
+        status: true
